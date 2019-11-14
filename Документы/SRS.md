@@ -37,7 +37,7 @@
  
 Данная форма предполагает функции добавления новых точек маршрута, их удаление, построение маршрута от текущего расположения пользователя через выбранные точки, рисунок 2.2.
 
-![рисунок 2.2](https://github.com/DzmitryKuhach750503/Red-Route-Planner/blob/master/Мокапы/Route_settings.png) 
+![рисунок 2.2](https://github.com/DzmitryKuhach750503/Red-Route-Planner/blob/master/Мокапы/Route_Settings.png)
   
 Пример построенного маршрута приведён на рисунке 2.3.
 
@@ -45,7 +45,7 @@
    
 В приложении должны быть предусмотрены настройки, которые вызываются из главного меню (рисунок 2.4).
 
-![рисунок 2.4](https://github.com/DzmitryKuhach750503/Red-Route-Planner/blob/master/Мокапы/Settings.png)  
+![рисунок 2.4](https://github.com/DzmitryKuhach750503/Red-Route-Planner/blob/master/Мокапы/Setting.png)
  
 
 
