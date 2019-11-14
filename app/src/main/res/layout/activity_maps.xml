@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity" >
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="47dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="710dp"
+        android:layout_weight="4"
+        android:alpha="0.80"
+        android:backgroundTint="#F0F0F0"
+        android:scrollbarDefaultDelayBeforeFade="400"
+        android:src="@android:drawable/ic_menu_manage"
+        android:text="button" />
+</RelativeLayout>
