@@ -25,4 +25,17 @@
         android:scrollbarDefaultDelayBeforeFade="400"
         android:src="@android:drawable/ic_menu_manage"
         android:text="button" />
+
+    <Button
+        android:id="@+id/createNewRouteButton"
+        android:layout_width="300dp"
+        android:layout_height="68dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="55dp"
+        android:layout_marginBottom="13dp"
+        android:layout_weight="4"
+        android:alpha="0.80"
+        android:backgroundTint="#F0F0F0"
+        android:text="Построить маршрут" />
 </RelativeLayout>

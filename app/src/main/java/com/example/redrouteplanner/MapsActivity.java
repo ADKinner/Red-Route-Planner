@@ -23,6 +23,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ImageButton settingsButton;
+    private Button createNewRouteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        createNewRouteButton = (Button) findViewById(R.id.createNewRouteButton);
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MapsActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        createNewRouteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, RouteActivity.class);
                 startActivity(intent);
             }
         });
