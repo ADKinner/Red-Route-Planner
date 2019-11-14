@@ -1,11 +1,11 @@
 # Red Route Planner
 **Red Route Planner** - это мобильное приложение, позволяющее пользователю быстро построить маршрут между необходимыми ему местами, а также опеределить своё местоположение или просто воспользоваться картой. 
 
-[SRS]()
+[SRS](https://github.com/DzmitryKuhach750503/Red-Route-Planner/blob/master/Документы/SRS.md)
 
-[Мокапы]()
+[Мокапы](https://github.com/DzmitryKuhach750503/Red-Route-Planner/tree/master/Мокапы)
 
-[Диаграммы]()  
+[Диаграммы](https://github.com/DzmitryKuhach750503/Red-Route-Planner/tree/master/Диаграммы)
 
 ОС - Android.
 Язык - Java.
