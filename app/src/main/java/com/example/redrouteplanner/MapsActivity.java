@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MapsActivity.this, RouteActivity.class);
+                double latitude = mMap.getCameraPosition().target.latitude;
+                double longitude = mMap.getCameraPosition().target.longitude;
+                System.out.println(latitude + " " + longitude);
                 startActivity(intent);
             }
         });
