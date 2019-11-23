@@ -1,6 +1,7 @@
 package com.example.redrouteplanner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -47,13 +48,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         createNewRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Location location = mMap.getMyLocation();
                 Intent intent = new Intent(MapsActivity.this, RouteActivity.class);
-                double latitude = mMap.getCameraPosition().target.latitude;
-                double longitude = mMap.getCameraPosition().target.longitude;
-                System.out.println(latitude + " " + longitude);
-                startActivity(intent);
+                intent.putExtra("lat", location.getLatitude());
+                intent.putExtra("long", location.getLongitude());
+                startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int countOfPoints = data.getIntExtra("countOfPoints", -1);
+        double[] pointsLatitudes = data.getDoubleArrayExtra("pointsLatitudes");
+        double[] pointsLongtitudes = data.getDoubleArrayExtra("pointsLongtitudes");
     }
 
     @Override

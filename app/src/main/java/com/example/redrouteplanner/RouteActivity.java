@@ -2,15 +2,27 @@ package com.example.redrouteplanner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.location.Location;
-import android.location.LocationListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RouteActivity extends AppCompatActivity {
@@ -26,14 +38,33 @@ public class RouteActivity extends AppCompatActivity {
     private TextView fifthPointTextView;
 
     private static final String EMPTY_LINE = "";
+    private static final int SEARCH_POINTS_RADIUS = 5000;
+    private static final double ERROR_LATITUDE = -79.272051;
+    private static final double ERROR_LONGTITUDE = 49.547948;
 
     private int idOfLastInvisibleTextView;
+    private double userLatitude;
+    private double userLongtitude;
+    private double[] pointsLatitudes;
+    private double[] pointsLongtitudes;
+
+    private List<LatLng> latLngNearestPointList;
+    private List<LatLng> latLngAllPointsList;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
         setTitle("Create new route");
+
+        Bundle arguments = getIntent().getExtras();
+        userLatitude = arguments.getDouble("lat");
+        userLongtitude = arguments.getDouble("long");
+
+        latLngNearestPointList = new ArrayList<>();
+
+        mQueue = Volley.newRequestQueue(this);
 
         returnButton = (ImageButton) findViewById(R.id.returnButton);
         returnButton.setOnClickListener(new View.OnClickListener() {
@@ -64,10 +95,19 @@ public class RouteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<String> namesOfPoints = getNamesOfPoints();
-
-                for (String text : namesOfPoints) {
-                    System.out.println(text);
+                int i = 1;
+                pointsLongtitudes = new double[namesOfPoints.size()];
+                pointsLatitudes = new double[namesOfPoints.size()];
+                for (String nameOfPoint : namesOfPoints) {
+                    getAllPointsFromName(nameOfPoint, new LatLng(userLatitude, userLongtitude), i);
+                    try {
+                        Thread.sleep(1000);
+                        i++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 
@@ -151,51 +191,133 @@ public class RouteActivity extends AppCompatActivity {
     }
 
     private List getNamesOfPoints() {
-        List<String> namesOfPoints = new ArrayList<>();
+        List<String> namesOfPointsList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             switch (i) {
                 case 0:
                     if (firstPointTextView.isEnabled()) {
-                        String text = firstPointTextView.getText().toString();
-                        if (!text.equals(EMPTY_LINE)) {
-                            namesOfPoints.add(text);
-                        }
+                        getPointsNamesFromTextView(firstPointTextView, namesOfPointsList);
                     }
                     break;
                 case 1:
                     if (secondPointTextView.isEnabled()) {
-                        String text = secondPointTextView.getText().toString();
-                        if (!text.equals(EMPTY_LINE)) {
-                            namesOfPoints.add(text);
-                        }
+                        getPointsNamesFromTextView(secondPointTextView, namesOfPointsList);
                     }
                     break;
                 case 2:
                     if (thirdPointTextView.isEnabled()) {
-                        String text = thirdPointTextView.getText().toString();
-                        if (!text.equals(EMPTY_LINE)) {
-                            namesOfPoints.add(text);
-                        }
+                        getPointsNamesFromTextView(thirdPointTextView, namesOfPointsList);
                     }
                     break;
                 case 3:
                     if (fouthPointTextView.isEnabled()) {
-                        String text = fouthPointTextView.getText().toString();
-                        if (!text.equals(EMPTY_LINE)) {
-                            namesOfPoints.add(text);
-                        }
+                        getPointsNamesFromTextView(fouthPointTextView, namesOfPointsList);
                     }
                     break;
                 case 4:
                     if (fifthPointTextView.isEnabled()) {
-                        String text = fifthPointTextView.getText().toString();
-                        if (!text.equals(EMPTY_LINE)) {
-                            namesOfPoints.add(text);
-                        }
+                        getPointsNamesFromTextView(fifthPointTextView, namesOfPointsList);
                     }
                     break;
             }
         }
-        return namesOfPoints;
+        return namesOfPointsList;
+    }
+
+    private void getAllPointsFromName(String name, LatLng current, final int id) {
+        String url = getURL(name, current).toString();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.has("results")) {
+                    try {
+                        latLngAllPointsList = new ArrayList<>();
+                        String jsonStatus = response.getString("status");
+                        if (jsonStatus.equals("ZERO_RESULTS")) {
+                            latLngNearestPointList.add(new LatLng(ERROR_LATITUDE, ERROR_LONGTITUDE));
+                            pointsLatitudes[id - 1] = getLatitudeFromListById(latLngNearestPointList, id);
+                            pointsLongtitudes[id - 1] = getLongtitudeFromListById(latLngNearestPointList, id);
+                        } else {
+                            JSONArray jsonArray = response.getJSONArray("results");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonArrayObject = jsonArray.getJSONObject(i);
+                                JSONObject jsonGeometryObject = jsonArrayObject.getJSONObject("geometry");
+                                JSONObject jsonLocationObject = jsonGeometryObject.getJSONObject("location");
+                                double lat = jsonLocationObject.getDouble("lat");
+                                double lng = jsonLocationObject.getDouble("lng");
+                                latLngAllPointsList.add(new LatLng(lat, lng));
+                            }
+                            latLngNearestPointList.add(latLngAllPointsList.get(getIdOfNearestPoint()));
+                            pointsLatitudes[id - 1] = getLatitudeFromListById(latLngNearestPointList, id);
+                            pointsLongtitudes[id - 1] = getLongtitudeFromListById(latLngNearestPointList, id);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }  finally {
+                        if (getNamesOfPoints().size() == id) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent();
+                            intent.putExtra("countOfPoints", id);
+                            intent.putExtra("pointsLatitudes", pointsLatitudes);
+                            intent.putExtra("pointsLongtitudes", pointsLongtitudes);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(jsonObjectRequest);
+    }
+
+    private int getIdOfNearestPoint() {
+        List<Double> listOfDistances = new ArrayList<>();
+        for (LatLng latLng : latLngAllPointsList) {
+            listOfDistances.add(Math.sqrt(Math.pow(userLatitude - latLng.latitude, 2) +
+                    Math.pow(userLongtitude - latLng.longitude, 2)));
+        }
+        return listOfDistances.indexOf(Collections.min(listOfDistances));
+    }
+
+    private double getLatitudeFromListById(List<LatLng> list, int id) {
+        System.out.println(id);
+        return list.get(id - 1).latitude;
+    }
+
+    private double getLongtitudeFromListById(List<LatLng> list, int id) {
+        return list.get(id - 1).longitude;
+    }
+
+    private StringBuffer getURL(String name, LatLng current) {
+        StringBuffer urlStringBuffer = new StringBuffer("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=");
+        urlStringBuffer.append(current.latitude);
+        urlStringBuffer.append(",");
+        urlStringBuffer.append(current.longitude);
+        urlStringBuffer.append("&radius=");
+        urlStringBuffer.append(SEARCH_POINTS_RADIUS);
+        urlStringBuffer.append("&name=");
+        urlStringBuffer.append(name);
+        urlStringBuffer.append("&sensor=true&key=AIzaSyCr706wj6wwi9EfO24u6gcQZ-s5Eweg5DI");
+        return urlStringBuffer;
+    }
+
+    private void getPointsNamesFromTextView(TextView textView, List<String> namesOfPointsList) {
+        String text = textView.getText().toString();
+        if (!text.equals(EMPTY_LINE)) {
+            namesOfPointsList.add(text);
+        }
+
     }
 }
