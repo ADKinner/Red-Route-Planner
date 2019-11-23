@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,12 +32,12 @@ public class RouteActivity extends AppCompatActivity {
     private Button addPointTextViewButton;
     private Button deleteLastPointTextViewButton;
     private Button createRouteButton;
+    private Spinner typeMovementSpinner;
 
     private TextView firstPointTextView;
     private TextView secondPointTextView;
     private TextView thirdPointTextView;
     private TextView fouthPointTextView;
-    private TextView fifthPointTextView;
 
     private static final String EMPTY_LINE = "";
     private static final int SEARCH_POINTS_RADIUS = 5000;
@@ -57,6 +59,8 @@ public class RouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
         setTitle("Create new route");
+
+        initializeSpinner();
 
         Bundle arguments = getIntent().getExtras();
         userLatitude = arguments.getDouble("lat");
@@ -101,8 +105,9 @@ public class RouteActivity extends AppCompatActivity {
                 for (String nameOfPoint : namesOfPoints) {
                     getAllPointsFromName(nameOfPoint, new LatLng(userLatitude, userLongtitude), i);
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                         i++;
+                        setReturnButtonNotClickable();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -115,7 +120,7 @@ public class RouteActivity extends AppCompatActivity {
         secondPointTextView = (TextView) findViewById(R.id.secondPointTextView);
         thirdPointTextView = (TextView) findViewById(R.id.thirdPointTextView);
         fouthPointTextView = (TextView) findViewById(R.id.fouthPointTextView);
-        fifthPointTextView = (TextView) findViewById(R.id.fifthPointTextView);
+
 
         setStartTextViewVisibility();
     }
@@ -128,8 +133,6 @@ public class RouteActivity extends AppCompatActivity {
         thirdPointTextView.setVisibility(View.INVISIBLE);
         fouthPointTextView.setEnabled(false);
         fouthPointTextView.setVisibility(View.INVISIBLE);
-        fifthPointTextView.setEnabled(false);
-        fifthPointTextView.setVisibility(View.INVISIBLE);
     }
 
     private TextView getNextInvisiblePointTextView() {
@@ -143,9 +146,6 @@ public class RouteActivity extends AppCompatActivity {
                 break;
             case 3:
                 nextInvisibleTextPointView = fouthPointTextView;
-                break;
-            case 4:
-                nextInvisibleTextPointView = fifthPointTextView;
                 break;
         }
         return nextInvisibleTextPointView;
@@ -172,9 +172,6 @@ public class RouteActivity extends AppCompatActivity {
                 break;
             case 4:
                 lastVisiblePointTextView = fouthPointTextView;
-                break;
-            case 5:
-                lastVisiblePointTextView = fifthPointTextView;
                 break;
         }
         return lastVisiblePointTextView;
@@ -212,11 +209,6 @@ public class RouteActivity extends AppCompatActivity {
                 case 3:
                     if (fouthPointTextView.isEnabled()) {
                         getPointsNamesFromTextView(fouthPointTextView, namesOfPointsList);
-                    }
-                    break;
-                case 4:
-                    if (fifthPointTextView.isEnabled()) {
-                        getPointsNamesFromTextView(fifthPointTextView, namesOfPointsList);
                     }
                     break;
             }
@@ -262,11 +254,18 @@ public class RouteActivity extends AppCompatActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            boolean typeOfMovementIsCar = true;
+                            if (typeMovementSpinner.getSelectedItemPosition() == 1) {
+                                typeOfMovementIsCar = true;
+                            } else {
+                                typeOfMovementIsCar = false;
+                            }
                             Intent intent = new Intent();
                             intent.putExtra("countOfPoints", id);
                             intent.putExtra("pointsLatitudes", pointsLatitudes);
                             intent.putExtra("pointsLongtitudes", pointsLongtitudes);
-                            setResult(RESULT_OK, intent);
+                            intent.putExtra("typeOfMovementIsCar", typeOfMovementIsCar);
+                            setResult(1, intent);
                             finish();
                         }
                     }
@@ -319,5 +318,21 @@ public class RouteActivity extends AppCompatActivity {
             namesOfPointsList.add(text);
         }
 
+    }
+
+    private void initializeSpinner() {
+        List<String> spinnerParametrs = new ArrayList<>();
+        spinnerParametrs.add("Пешком");
+        spinnerParametrs.add("На машине");
+
+        typeMovementSpinner = findViewById(R.id.typeMovementSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, spinnerParametrs);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeMovementSpinner.setAdapter(adapter);
+    }
+
+    private void setReturnButtonNotClickable() {
+        returnButton.setClickable(false);
     }
 }

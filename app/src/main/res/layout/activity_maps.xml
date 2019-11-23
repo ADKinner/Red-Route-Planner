@@ -21,7 +21,7 @@
         android:layout_marginBottom="710dp"
         android:layout_weight="4"
         android:alpha="0.80"
-        android:backgroundTint="#F0F0F0"
+        android:backgroundTint="#FFFFFF"
         android:scrollbarDefaultDelayBeforeFade="400"
         android:src="@android:drawable/ic_menu_manage"
         android:text="button" />
@@ -36,6 +36,6 @@
         android:layout_marginBottom="13dp"
         android:layout_weight="4"
         android:alpha="0.80"
-        android:backgroundTint="#F0F0F0"
+        android:backgroundTint="#FFFFFF"
         android:text="Построить маршрут" />
 </RelativeLayout>

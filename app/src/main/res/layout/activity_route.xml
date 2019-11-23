@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FF4444"
+    android:outlineAmbientShadowColor="#131111"
+    android:outlineSpotShadowColor="#0F0D0D"
     tools:context=".RouteActivity">
 
     <ImageButton
@@ -14,6 +17,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="348dp"
         android:layout_marginBottom="586dp"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,14 +29,13 @@
         android:layout_width="373dp"
         android:layout_height="68dp"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="662dp"
         android:layout_marginEnd="19dp"
         android:layout_marginBottom="15dp"
+        android:background="@android:color/white"
         android:text="Создать маршрут"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/firstPointTextView"
@@ -41,8 +44,12 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="70dp"
+        android:background="@android:color/white"
         android:ems="10"
+        android:gravity="center"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
+        android:textColorLink="#1A1818"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,8 +61,12 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="71dp"
+        android:background="@android:color/white"
         android:ems="10"
+        android:gravity="center"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
+        android:textColorLink="#1A1818"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstPointTextView" />
@@ -67,8 +78,12 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="70dp"
+        android:background="@android:color/white"
         android:ems="10"
+        android:gravity="center"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
+        android:textColorLink="#1A1818"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondPointTextView" />
@@ -80,24 +95,15 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="70dp"
+        android:background="@android:color/white"
         android:ems="10"
+        android:gravity="center"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
+        android:textColorLink="#1A1818"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thirdPointTextView" />
-
-    <EditText
-        android:id="@+id/fifthPointTextView"
-        android:layout_width="253dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="71dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fouthPointTextView" />
 
     <Button
         android:id="@+id/addPointTextViewButton"
@@ -106,25 +112,42 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="70dp"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/white"
         android:text="Добавить точку маршрута"
+        app:layout_constraintBottom_toTopOf="@+id/deleteLastPointTextViewButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fifthPointTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/typeMovementSpinner"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/deleteLastPointTextViewButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="25dp"
         android:layout_marginEnd="164dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/white"
         android:text="Удалить последнюю точку"
         app:layout_constraintBottom_toTopOf="@+id/createRouteButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/typeMovementSpinner"
+        android:layout_width="253dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="70dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:outlineSpotShadowColor="#00111010"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPointTextViewButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/fouthPointTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
