@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1991E4"
     tools:context=".SettingsActivity">
 
     <Button
@@ -14,6 +15,7 @@
         android:layout_marginTop="644dp"
         android:layout_marginEnd="19dp"
         android:layout_marginBottom="8dp"
+        android:background="@android:color/white"
         android:text="Сохранить настройки"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,10 +30,71 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="348dp"
         android:layout_marginBottom="586dp"
+        android:background="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <Spinner
+        android:id="@+id/colorMarkerSpinner"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="35dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/colorRouteSpinner"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="35dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorMarkerSpinner" />
+
+    <TextView
+        android:id="@+id/colorPointsTextView"
+        android:layout_width="190dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="Цвет точек маршрута"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnButton" />
+
+    <TextView
+        android:id="@+id/colorRouteTextView"
+        android:layout_width="190dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="45dp"
+        android:gravity="center"
+        android:text="Цвет маршрута"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorPointsTextView" />
+
+    <TextView
+        android:id="@+id/attentionTextView"
+        android:layout_width="312dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="97dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="130dp"
+        android:gravity="center"
+        android:text="Внимание!\n При сохранении изменений в настройках, изменения будут отображены только после постройки нового маршрута."
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorRouteSpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class RouteActivity extends AppCompatActivity {
+    private static final String EMPTY_LINE = "";
+    private static final int SEARCH_POINTS_RADIUS = 5000;
+    private static final double ERROR_LATITUDE = -79.272051;
+    private static final double ERROR_LONGTITUDE = 49.547948;
+
     private ImageButton returnButton;
     private Button addPointTextViewButton;
     private Button deleteLastPointTextViewButton;
@@ -38,11 +43,6 @@ public class RouteActivity extends AppCompatActivity {
     private TextView secondPointTextView;
     private TextView thirdPointTextView;
     private TextView fouthPointTextView;
-
-    private static final String EMPTY_LINE = "";
-    private static final int SEARCH_POINTS_RADIUS = 5000;
-    private static final double ERROR_LATITUDE = -79.272051;
-    private static final double ERROR_LONGTITUDE = 49.547948;
 
     private int idOfLastInvisibleTextView;
     private double userLatitude;
@@ -103,7 +103,8 @@ public class RouteActivity extends AppCompatActivity {
                 pointsLongtitudes = new double[namesOfPoints.size()];
                 pointsLatitudes = new double[namesOfPoints.size()];
                 for (String nameOfPoint : namesOfPoints) {
-                    getAllPointsFromName(nameOfPoint, new LatLng(userLatitude, userLongtitude), i);
+                    LatLng dinamicCoordinates = new LatLng(userLatitude, userLongtitude);
+                    getAllPointsFromName(nameOfPoint, dinamicCoordinates, i);
                     try {
                         Thread.sleep(300);
                         i++;
@@ -227,22 +228,32 @@ public class RouteActivity extends AppCompatActivity {
                         latLngAllPointsList = new ArrayList<>();
                         String jsonStatus = response.getString("status");
                         if (jsonStatus.equals("ZERO_RESULTS")) {
-                            latLngNearestPointList.add(new LatLng(ERROR_LATITUDE, ERROR_LONGTITUDE));
-                            pointsLatitudes[id - 1] = getLatitudeFromListById(latLngNearestPointList, id);
-                            pointsLongtitudes[id - 1] = getLongtitudeFromListById(latLngNearestPointList, id);
+                            latLngNearestPointList.add(new LatLng(ERROR_LATITUDE,
+                                    ERROR_LONGTITUDE));
+                            pointsLatitudes[id - 1] =
+                                    getLatitudeFromListById(latLngNearestPointList, id);
+                            pointsLongtitudes[id - 1] =
+                                    getLongtitudeFromListById(latLngNearestPointList, id);
                         } else {
                             JSONArray jsonArray = response.getJSONArray("results");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonArrayObject = jsonArray.getJSONObject(i);
-                                JSONObject jsonGeometryObject = jsonArrayObject.getJSONObject("geometry");
-                                JSONObject jsonLocationObject = jsonGeometryObject.getJSONObject("location");
+                                JSONObject jsonGeometryObject = jsonArrayObject
+                                        .getJSONObject("geometry");
+                                JSONObject jsonLocationObject = jsonGeometryObject
+                                        .getJSONObject("location");
                                 double lat = jsonLocationObject.getDouble("lat");
                                 double lng = jsonLocationObject.getDouble("lng");
                                 latLngAllPointsList.add(new LatLng(lat, lng));
                             }
-                            latLngNearestPointList.add(latLngAllPointsList.get(getIdOfNearestPoint()));
-                            pointsLatitudes[id - 1] = getLatitudeFromListById(latLngNearestPointList, id);
-                            pointsLongtitudes[id - 1] = getLongtitudeFromListById(latLngNearestPointList, id);
+                            latLngNearestPointList.add(latLngAllPointsList
+                                    .get(getIdOfNearestPoint()));
+                            pointsLatitudes[id - 1] =
+                                    getLatitudeFromListById(latLngNearestPointList, id);
+                            pointsLongtitudes[id - 1] =
+                                    getLongtitudeFromListById(latLngNearestPointList, id);
+                            userLatitude = getLatitudeFromListById(latLngNearestPointList, id);
+                            userLongtitude = getLongtitudeFromListById(latLngNearestPointList, id);
 
                         }
                     } catch (JSONException e) {
