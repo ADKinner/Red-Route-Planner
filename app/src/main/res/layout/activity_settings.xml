@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1991E4"
+    android:background="#FF4444"
     tools:context=".SettingsActivity">
 
     <Button
@@ -40,20 +40,22 @@
     <Spinner
         android:id="@+id/colorMarkerSpinner"
         android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="123dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="135dp"
         android:layout_marginEnd="35dp"
-        android:background="@android:color/white"
+        android:background="#FF9800"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/colorRouteSpinner"
         android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="65dp"
         android:layout_marginEnd="35dp"
-        android:background="@android:color/white"
+        android:background="#FF9800"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colorMarkerSpinner" />
 
@@ -65,7 +67,8 @@
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="Цвет точек маршрута"
-        android:textSize="18dp"
+        android:textSize="19dp"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/returnButton" />
 
@@ -77,7 +80,8 @@
         android:layout_marginTop="45dp"
         android:gravity="center"
         android:text="Цвет маршрута"
-        android:textSize="18dp"
+        android:textSize="19dp"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colorPointsTextView" />
 
@@ -90,8 +94,9 @@
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="130dp"
         android:gravity="center"
-        android:text="Внимание!\n При сохранении изменений в настройках, изменения будут отображены только после постройки нового маршрута."
+        android:text="При сохранении изменений в настройках, изменения будут отображены только после постройки нового маршрута."
         android:textSize="20dp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
