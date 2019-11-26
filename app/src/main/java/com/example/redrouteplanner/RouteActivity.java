@@ -108,7 +108,7 @@ public class RouteActivity extends AppCompatActivity {
                     LatLng dinamicCoordinates = new LatLng(userLatitude, userLongtitude);
                     getAllPointsFromName(nameOfPoint, dinamicCoordinates, i);
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(500);
                         i++;
                         setReturnButtonNotClickable();
                     } catch (InterruptedException e) {
@@ -185,6 +185,7 @@ public class RouteActivity extends AppCompatActivity {
             return;
         } else {
             textView.setEnabled(false);
+            textView.setText(EMPTY_LINE);
             textView.setVisibility(View.INVISIBLE);
             idOfLastInvisibleTextView--;
         }
@@ -304,7 +305,6 @@ public class RouteActivity extends AppCompatActivity {
     }
 
     private double getLatitudeFromListById(List<LatLng> list, int id) {
-        System.out.println(id);
         return list.get(id - 1).latitude;
     }
 
