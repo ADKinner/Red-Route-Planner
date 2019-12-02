@@ -14,8 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RouteActivity"></activity>
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".RouteActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -30,6 +32,7 @@
 
         <activity
             android:name=".MapsActivity"
+            android:screenOrientation="portrait"
             android:label="Red Route Planner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
