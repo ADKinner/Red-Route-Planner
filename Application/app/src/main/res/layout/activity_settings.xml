@@ -9,31 +9,23 @@
 
     <Button
         android:id="@+id/saveSettingsButton"
-        android:layout_width="373dp"
+        android:layout_width="323dp"
         android:layout_height="68dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="644dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="30dp"
         android:background="@android:color/white"
         android:text="Сохранить настройки"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/returnButton"
         android:layout_width="50dp"
         android:layout_height="53dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="348dp"
-        android:layout_marginBottom="586dp"
-        android:background="#FF4444"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
         android:alpha="0.88"
-        app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#FF4444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
@@ -42,12 +34,12 @@
         android:id="@+id/colorMarkerSpinner"
         android:layout_width="135dp"
         android:layout_height="45dp"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="35dp"
         android:background="#FF9800"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/returnButton" />
 
     <Spinner
         android:id="@+id/colorRouteSpinner"
@@ -93,12 +85,10 @@
         android:layout_marginStart="51dp"
         android:layout_marginTop="97dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="130dp"
         android:gravity="center"
         android:text="При сохранении изменений в настройках, изменения будут отображены только после постройки нового маршрута."
         android:textSize="20dp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/saveSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colorRouteSpinner" />
