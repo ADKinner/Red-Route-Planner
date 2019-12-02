@@ -7,6 +7,8 @@
 
 [Диаграммы](https://github.com/DzmitryKuhach750503/Red-Route-Planner/tree/master/Диаграммы)
 
+[Тестирование]
+
 ОС - Android.
 Язык - Java.
 IDE - Android Studio.
