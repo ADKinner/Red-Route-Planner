@@ -2,9 +2,11 @@ package com.example.redrouteplanner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -100,22 +103,33 @@ public class RouteActivity extends AppCompatActivity {
         createRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> namesOfPoints = getNamesOfPoints();
-                int i = 1;
-                pointsLongtitudes = new double[namesOfPoints.size()];
-                pointsLatitudes = new double[namesOfPoints.size()];
-                for (String nameOfPoint : namesOfPoints) {
-                    LatLng dinamicCoordinates = new LatLng(userLatitude, userLongtitude);
-                    getAllPointsFromName(nameOfPoint, dinamicCoordinates, i);
-                    try {
-                        Thread.sleep(500);
-                        i++;
-                        setReturnButtonNotClickable();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                if (isOnline()) {
+                    List<String> namesOfPoints = getNamesOfPoints();
+                    int i = 1;
+                    pointsLongtitudes = new double[namesOfPoints.size()];
+                    pointsLatitudes = new double[namesOfPoints.size()];
+                    for (String nameOfPoint : namesOfPoints) {
+                        LatLng dinamicCoordinates = new LatLng(userLatitude, userLongtitude);
+                        getAllPointsFromName(nameOfPoint, dinamicCoordinates, i);
+                        try {
+                            Thread.sleep(500);
+                            i++;
+                            setReturnButtonNotClickable();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Нет соединения с интернетом!",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.putExtra("countOfPoints", 0);
+                    intent.putExtra("pointsLatitudes", pointsLatitudes);
+                    intent.putExtra("pointsLongtitudes", pointsLongtitudes);
+                    intent.putExtra("typeOfMovementIsCar", 0);
+                    setResult(1, intent);
+                    finish();
                 }
-
             }
         });
 
@@ -347,5 +361,16 @@ public class RouteActivity extends AppCompatActivity {
 
     private void setReturnButtonNotClickable() {
         returnButton.setClickable(false);
+    }
+
+    private boolean isOnline() {
+        String cs = Context.CONNECTIVITY_SERVICE;
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(cs);
+        if (cm.getActiveNetworkInfo() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
