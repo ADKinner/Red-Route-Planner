@@ -111,8 +111,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (countOfPoints > 0) {
                 getOnlyCorrectPoints(countOfPoints, pointsLatitudes, pointsLongtitudes);
                 clearMap();
-                setNewMarkers(correctMarkerPoints);
-                createNewRoute(typeOfMovementIsCar);
+		if (countOfPoints > 0) {
+                	setNewMarkers(correctMarkerPoints);
+                	createNewRoute(typeOfMovementIsCar);
+		}
             }
         } else if (resultCode == 2) {
             routeColor = data.getIntExtra("newColorRoute", DEFAULT_COLOR);
