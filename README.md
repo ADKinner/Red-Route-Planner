@@ -7,7 +7,7 @@
 
 [Диаграммы](https://github.com/DzmitryKuhach750503/Red-Route-Planner/tree/master/Диаграммы)
 
-[Тестирование]()
+[Тестирование](https://github.com/DzmitryKuhach750503/Red-Route-Planner/tree/master/Тестирование/TestPlan.md)
 
 ОС - Android.
 Язык - Java.
