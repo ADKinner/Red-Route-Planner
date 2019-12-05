@@ -12,7 +12,7 @@
 
 ## 1. Введение <a name="1"></a>  
 
-Содержание данного документа описывает план тестирования приложения "Red Route Planner". План тестирования предназначен для проведения тестирования приложения. Цель проведения тестирования - проверка приложения в соответствии с [Software Requirements Specification](https://github.com/KevinPozitive/client-server-application-requirements/blob/master/Requirements/требования.md).
+Содержание данного документа описывает план тестирования приложения "AstreyMSG". План тестирования предназначен для проведения тестирования приложения. Цель проведения тестирования - проверка приложения в соответствии с [Software Requirements Specification](https://github.com/KevinPozitive/client-server-application-requirements/blob/master/Requirements/требования.md).
 
 ## 2. Объект тестирования <a name="2"></a>  
 
